@@ -1,0 +1,184 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+    color: #dcdcdc;
+}
+
+.container {
+    display: flex;
+    background-color: #2d2d2d;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 90%;
+    max-width: 1200px;
+    height: 90vh;
+}
+
+.left-panel {
+    width: 30%;
+    padding: 20px;
+    border-right: 1px solid #444;
+    background-color: #292929;
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.left-panel h1 {
+    color: #dcdcdc;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.left-panel label, .left-panel button, .left-panel select {
+    display: block;
+    width: 94%;
+    margin-bottom: 10px;
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+    border-radius: 4px;
+    padding: 10px;
+    border: 1px solid #444;
+}
+
+.left-panel input[type="file"] {
+    margin-bottom: 10px;
+}
+
+.left-panel ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.left-panel select {
+    margin-bottom: 20px;
+}
+
+.left-panel ul li {
+    background-color: #3b3b3b;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    color: #dcdcdc;
+    white-space: nowrap;           /* Prevents text from wrapping */
+    overflow: hidden;              /* Ensures that overflow is hidden */
+    text-overflow: ellipsis;       /* Adds '...' at the end of overflowing text */
+    max-width: 100%;               /* Ensures it stays within the container */
+    box-sizing: border-box;
+}
+
+#file-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 150px;             /* Adjust this height as needed */
+    overflow-y: auto;
+}
+
+/* Styling for better UX on hover */
+.left-panel ul li:hover {
+    background-color: #494949;
+}
+
+.btn {
+    background-color: #565656;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    max-width: 50%;
+}
+
+.btn:hover {
+    background-color: #787878;
+}
+
+.model-select{
+    max-width: 50%;
+}
+
+.right-panel {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#chat-box {
+    flex: 1;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    overflow-y: auto;
+    background-color: #1e1e1e;
+}
+
+.user-message, .bot-message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.user-message {
+    background-color: #3b8f99;
+    margin-left: auto;
+    color: #ffffff;
+}
+
+.bot-message {
+    background-color: #3b3b3b;
+    margin-right: auto;
+    color: #dcdcdc;
+    align-items: flex-start;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+#query-form {
+    display: flex;
+}
+
+#query-form input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+}
+
+#query-form button {
+    padding: 10px 20px;
+    background-color: #565656;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#query-form button:hover {
+    background-color: #787878;
+}

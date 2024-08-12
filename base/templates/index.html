@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG ChatBOT</title>
+    <link rel="icon" href="static/logo/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1>
+                <img src="static/logo/logo.png" alt="RAG System Logo" class="logo">
+            </h1>
+            <form id="upload-form" method="POST" enctype="multipart/form-data">
+                <label for="files">Upload PDFs:</label>
+                <input type="file" id="files" name="files" multiple required>
+                <ul id="file-list"></ul>
+                <button type="submit" class="btn">Upload</button>
+                <label for="model-select">Choose Model:</label>
+                <select class="model-select" id="model-select" name="model">
+                    <option value="google">gemini-1.5-flash-001-tuning</option>
+                    <option value="llama">Llama3-8b-8192</option>
+                </select>
+                <ul id="file-list"></ul>
+            </form>
+        </div>
+        
+        <div class="right-panel">
+            <div id="chat-box">
+                <!-- Messages will be dynamically added here -->
+            </div>
+            <form id="query-form" method="POST">
+                <input type="text" id="question" name="question" placeholder="What's up?" required>
+                <input type="hidden" id="current-model" name="model">
+                <button type="submit" class="btn">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('files').addEventListener('change', function() {
+            const fileList = document.getElementById('file-list');
+            fileList.innerHTML = '';
+            Array.from(this.files).forEach(file => {
+                const li = document.createElement('li');
+                li.textContent = file.name;
+                li.style.wordWrap = 'break-word';
+                fileList.appendChild(li);
+            });
+        });
+
+        function addMessageToChat(type, message) {
+            const chatBox = document.getElementById('chat-box');
+            const messageDiv = document.createElement('div');
+            const icon = document.createElement('img');
+            icon.src = type === 'user' ? 'static/icon/human.png' : 'static/icon/robot.png';
+            icon.classList.add('icon');
+            messageDiv.classList.add(type === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.innerText = message;
+            messageDiv.prepend(icon);
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Sync model selection between forms
+        const modelSelect = document.getElementById('model-select');
+        const currentModelInput = document.getElementById('current-model');
+
+        modelSelect.addEventListener('change', function() {
+            currentModelInput.value = this.value;
+        });
+
+        // Initialize current model input value
+        currentModelInput.value = modelSelect.value;
+
+        document.getElementById('upload-form').onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const model = formData.get('model');
+            const response = await fetch(`/upload?model=${model}`, {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            addMessageToChat('bot', result.message || result.error);
+        }
+
+        document.getElementById('query-form').onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const question = formData.get('question');
+            addMessageToChat('user', question);
+            document.getElementById('question').value = '';
+
+            const response = await fetch('/query', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            addMessageToChat('bot', result.response || result.error);
+        }
+    </script>
+</body>
+</html>

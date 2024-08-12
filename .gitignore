@@ -1,0 +1,8 @@
+# Python package
+__pycache__
+
+# .env
+.env
+
+# Sample books
+/Sample Books
